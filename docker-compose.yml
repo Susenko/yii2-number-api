@@ -4,11 +4,10 @@ services:
   app:
     build: .
     container_name: yii2-app
-    ports:
-      - "8000:8000"
+    restart: always
     volumes:
       - ./src:/var/www
-    working_dir: /var/www
+    ports:
+      - "8000:8000"
     environment:
-      - APP_ENV=local
-    command: ["php-fpm"]
+      - YII_ENV=dev

@@ -8,11 +8,11 @@ class SumEvenNumbersDto
 
     public function __construct(array $numbers)
     {
-        $this->numbers = array_filter($numbers, fn($num) => is_numeric($num));
+        $this->numbers = $numbers;
     }
 
-    public function getSumEven(): int
+    public function getNumbers(): array
     {
-        return array_sum(array_filter($this->numbers, fn($num) => $num % 2 === 0));
+        return $this->numbers;
     }
 }

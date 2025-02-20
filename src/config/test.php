@@ -6,41 +6,25 @@ $db = require __DIR__ . '/test_db.php';
  * Application configuration shared by all test types
  */
 return [
-    'id' => 'basic-tests',
+    'id' => 'test-app',
     'basePath' => dirname(__DIR__),
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
-    ],
-    'language' => 'en-US',
+    'vendorPath' => dirname(__DIR__) . '/vendor',
     'components' => [
-        'db' => $db,
-        'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
-            'viewPath' => '@app/mail',
-            // send all mails to a file by default.
-            'useFileTransport' => true,
-            'messageClass' => 'yii\symfonymailer\Message'
-        ],
-        'assetManager' => [
-            'basePath' => __DIR__ . '/../web/assets',
-        ],
-        'urlManager' => [
-            'showScriptName' => true,
-        ],
         'user' => [
+            'class' => 'yii\web\User',
             'identityClass' => 'app\models\User',
+            'enableAutoLogin' => false,
         ],
-        'request' => [
-            'cookieValidationKey' => 'test',
-            'enableCsrfValidation' => false,
-            // but if you absolutely need it set cookie domain to localhost
-            /*
-            'csrfCookie' => [
-                'domain' => 'localhost',
-            ],
-            */
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'sqlite::memory:',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => true,
         ],
     ],
-    'params' => $params,
 ];
