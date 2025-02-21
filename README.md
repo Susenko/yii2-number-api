@@ -27,7 +27,7 @@
 ### 📂 1. Клонуємо репозиторій
 
 ```sh
-git clone https://github.com/your-username/yii2-number-api.git
+git clone git@github.com:Susenko/yii2-number-api.git
 cd yii2-number-api
 ```
 
