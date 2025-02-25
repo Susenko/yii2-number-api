@@ -21,64 +21,40 @@ class ApiController extends Controller
         parent::__construct($id, $module, $config);
     }
 
-    public function beforeAction($action)
-    {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        if ($action->id === 'sum-even') {
-            Yii::$app->request->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
-    }
-
     public function actionSumEven()
     {
         try {
             $request = Yii::$app->request->getBodyParams();
 
-            if (!isset($request['numbers'])) {
-                throw new BadRequestHttpException('Missing "numbers" key in request.');
-            }
-
-            if (!is_array($request['numbers'])) {
-                throw new UnprocessableEntityHttpException('"numbers" must be an array of numbers.');
-            }
-
-            $dto = new SumEvenNumbersDto($request['numbers']);
-
-            $validator = new NumbersValidator();
-            if (!$validator->validate($dto->getNumbers())) {
-                throw new UnprocessableEntityHttpException('Неправильний формат даних. Очікуються лише числа.');
-            }
+            $dto = new SumEvenNumbersDto($request);
 
             $sum = $this->calculator->calculate($dto);
 
-            return [
-                'status' => 'success',
+            return $this->asJson([
                 'sum' => $sum,
-            ];
+            ]);
 
-        } catch (BadRequestHttpException | UnprocessableEntityHttpException $e) {
-            Yii::$app->response->statusCode = $e->statusCode;
-            return [
-                'status' => 'error',
+        } catch (InvalidArgumentException $e) {
+            Yii::$app->response->statusCode = 400;
+            return $this->asJson( [
                 'message' => $e->getMessage(),
-            ];
-
-        } catch (\TypeError $e) { // 🔹 Catch TypeError
+            ]);
+    
+        } catch (UnprocessableEntityHttpException $e) {
+            Yii::$app->response->statusCode = $e->statusCode;
+            return $this->asJson( [
+                'message' => $e->getMessage(),
+            ]);
+        } catch (\TypeError $e) {
             Yii::$app->response->statusCode = 422;
-            return [
-                'status' => 'error',
-                'message' => 'Неправильний формат даних. Очікуються лише числа.',
-            ];
-            
+            return $this->asJson( [
+                'message' => 'Incorrect format. Numbers required.',
+            ]);
         } catch (\Exception $e) {
             Yii::$app->response->statusCode = 500;
-            return [
-                'status' => 'error',
-                'message' => 'Внутрішня помилка сервера.',
-            ];
+            return $this->asJson( [
+                'message' => $e->getMessage(),
+            ]);
         }
     }
-
 }
