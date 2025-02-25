@@ -26,5 +26,13 @@ return [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => true,
         ],
+        'request' => [
+            'cookieValidationKey' => 'test_secret_key',
+            'enableCsrfValidation' => false,
+        ],
+        'assetManager' => [
+            'basePath' => '@webroot/assets',
+            'baseUrl' => '@web/assets',
+        ],
     ],
 ];

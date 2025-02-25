@@ -10,3 +10,6 @@ stop:
 
 logs:
 	docker-compose logs -f
+
+test:
+	docker-compose exec app ./vendor/bin/codecept run

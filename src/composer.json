@@ -27,7 +27,8 @@
     "php": ">=7.4.0",
     "yiisoft/yii2": "~2.0.45",
     "yiisoft/yii2-bootstrap5": "~2.0.2",
-    "yiisoft/yii2-symfonymailer": "~2.0.3"
+    "yiisoft/yii2-symfonymailer": "~2.0.3",
+    "bower-asset/jquery": "^3.7"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
@@ -36,7 +37,11 @@
     "codeception/lib-innerbrowser": "^4.0 || ^3.0 || ^1.1",
     "codeception/module-asserts": "^3.0 || ^1.1",
     "codeception/verify": "^3.0 || ^2.2",
-    "phpunit/phpunit": "^11.5"
+    "phpunit/phpunit": "^11.5",
+    "codeception/module-filesystem": "^3.0",
+    "codeception/module-yii2": "^1.1",
+    "codeception/module-rest": "^3.4",
+    "codeception/module-phpbrowser": "^3.0"
   },
   "config": {
     "allow-plugins": {
